@@ -1,4 +1,4 @@
-#!/bin/bash=
+#!/bin/bash
 
 # 프로젝트 이름 입력
 read -p "📄 프로젝트 이름을 입력해주세요 (기본값: MyReactNativeApp): " PROJECT_NAME < /dev/tty

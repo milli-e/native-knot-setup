@@ -10,6 +10,13 @@ fi
 echo "📦 라이브러리 설치 중..."
 npm install @react-navigation/native @react-navigation/stack @react-navigation/native-stack react-native-gesture-handler react-native-safe-area-context react-native-screens axios @reduxjs/toolkit @react-native-masked-view/masked-view react-native-fast-image react-native-permissions react-native-reanimated react-native-mmkv
 
+# iOS pod 세팅
+echo "🥥 iOS Pod 세팅 중..."
+cd ios
+bundle install # you need to run this only once in your project.
+bundle exec pod install
+cd ..
+
 # 폴더 구조 설정
 echo "📂 폴더 구조 생성 중..."
 mkdir -p src/{models,api,assets/{images,fonts},components,customHook,routes,screens,store,utils}
@@ -32,13 +39,14 @@ EOF
 
 # 기본 설정 추가
 echo "🎨 기본 설정 중..."
-cat > .prettierrc <<EOL
-{
+# Prettier 설정 
+cat <<EOF > .prettierrc.js
+module.exports = {
   singleQuote: true,
   tabWidth: 2,
   printWidth: 100,
-}
-EOL
+};
+EOF
 
 # tsconfig.json 에 path alias 설정 추가
 cat <<EOF > tsconfig.json
@@ -52,7 +60,7 @@ cat <<EOF > tsconfig.json
       "@api/*": ["api/*"],
       "@assets/*": ["assets/*"],
       "@components/*": ["components/*"],
-      "@hooks/*": ["customHook/*"]
+      "@hooks/*": ["customHook/*"],
       "@routes*/": ["routes/*"],
       "@screens/*": ["screens/*"],
       "@store/*": ["store/*"],

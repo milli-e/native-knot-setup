@@ -1,19 +1,16 @@
-#!/bin/bash=
+#!/bin/bash
 
 # 프로젝트 이름 입력
 read -p "📄 프로젝트 이름을 입력해주세요 (기본값: MyReactNativeApp): " PROJECT_NAME < /dev/tty
-PROJECT_NAME="${PROJECT_NAME:-MyReactNativeApp}" # 기본값 설정
+PROJECT_NAME=${PROJECT_NAME:-MyReactNativeApp} # 기본값 설정
 
 # React Native 버전 입력
 read -p "👉 사용할 React Native 버전을 입력하세요 (기본값: 0.77): " RN_VERSION < /dev/tty
-RN_VERSION="${RN_VERSION:-0.77}" # 기본값 설정
+RN_VERSION=${RN_VERSION:-0.77} # 기본값 설정
 
-# 프로젝트 생성
-echo "🚀 React Native $RN_VERSION 버전으로 '$PROJECT_NAME' 프로젝트를 생성합니다"
-npx @react-native-community/cli@latest init $PROJECT_NAME --version $RN_VERSION
-
-# 프로젝트 디렉토리로 이동
-cd $PROJECT_NAME
+# 임시 스크립트 파일 생성
+cat > setup-part2.sh << 'EOL'
+#!bin/bash
 
 # 필수 라이브러리 설치
 echo "📦 라이브러리 설치 중..."
@@ -104,3 +101,23 @@ module.exports = {
 EOF
 
 echo "🎉🎉 빰바바밤! 프로젝트 '$PROJECT_NAME' 생성 및 세팅 완료! 🎉🎉"
+rm -- "$0"
+EOL
+
+chmod +x setup-part2.sh
+
+# 프로젝트 생성
+echo "🚀 React Native $RN_VERSION 버전으로 '$PROJECT_NAME' 프로젝트를 생성합니다"
+( npx @react-native-community/cli@latest init $PROJECT_NAME --version $RN_VERSION )
+
+# 두 번째 단계 스크립트 복사 및 실행 안내
+echo "🔄 후속 설정 스크립트를 프로젝트 폴더로 복사합니다"
+cp setup-part2.sh "$PROJECT_NAME/"
+rm setup-part2.sh
+
+# 사용자 편의를 위해 자동 실행 옵션 제공
+read -p "⚙️ 자동으로 다음 단계를 계속하시겠습니까? (y/n): " AUTO_CONTINUE
+if [[ "$AUTO_CONTINUE" == "y" || "$AUTO_CONTINUE" == "Y" ]]; then
+  echo "🔄 자동으로 설정을 계속합니다..."
+  cd $PROJECT_NAME && ./setup-part2.sh
+fi

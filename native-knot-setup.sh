@@ -1,15 +1,11 @@
-#!/bin/bash
-# 스크립트 시작 부분에서 /dev/tty로 STDIN 전환 (인터랙티브 환경 강제)
-if [ -t 0 ]; then
-  exec < /dev/tty
-fi
+#!/bin/bash=
 
 # 프로젝트 이름 입력
-read -p "📄 프로젝트 이름을 입력해주세요 (기본값: MyReactNativeApp): " PROJECT_NAME 
+read -p "📄 프로젝트 이름을 입력해주세요 (기본값: MyReactNativeApp): " PROJECT_NAME < /dev/tty
 PROJECT_NAME="${PROJECT_NAME:-MyReactNativeApp}" # 기본값 설정
 
 # React Native 버전 입력
-read -p "👉 사용할 React Native 버전을 입력하세요 (기본값: 0.77): " RN_VERSION 
+read -p "👉 사용할 React Native 버전을 입력하세요 (기본값: 0.77): " RN_VERSION < /dev/tty
 RN_VERSION="${RN_VERSION:-0.77}" # 기본값 설정
 
 # 프로젝트 생성

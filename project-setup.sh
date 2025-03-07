@@ -17,7 +17,7 @@ fi
 echo "✏️ package.json에 스크립트 작성 중..."
 jq '.scripts += {
   "start": "npx react-native start --reset-cache",
-  "reset-cache": "npm cache verify"
+  "reset-cache": "npm cache verify",
   "android:bundle": "npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/"
 }' package.json > tmp.json && mv tmp.json package.json
 

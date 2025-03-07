@@ -26,10 +26,13 @@ COUNTER=0
     COUNTER=$((COUNTER+1))
 done
 
+# 프로젝트 디렉토리로 이동
+cd $PROJECT_NAME || { echo "프로젝트 디렉토리로 이동 실패"; exit 1; }
+
 # 후속 작업 실행
 read -p "👀 프로젝트 세팅을 계속해서 진행할까요? (Y/n): " CONFIRM < /dev/tty
 CONFIRM=${CONFIRM:-y} # 기본값 설정
-CONFIRM="${CONFIRM,,}" # 소문자로 변경
+CONFIRM=$(echo "$CONFIRM" | tr [:upper:] [:lower:])
 if [ "$CONFIRM" != "y" ]; then
   echo "🫠 프로젝트 세팅을 취소합니다. pod install 은 진행됩니다."
   echo "🥥 iOS pod install 중..."
@@ -41,7 +44,5 @@ if [ "$CONFIRM" != "y" ]; then
 fi
 
 # 동일한 저장소에 존재하는 후속 스크립트 실행
-# 프로젝트 디렉토리로 이동
-cd $PROJECT_NAME || { echo "프로젝트 디렉토리로 이동 실패"; exit 1; }
 echo "🧙 프로젝트 세팅 시작!"
 curl -sL https://raw.githubusercontent.com/milli-e/native-knot-setup/refs/heads/main/project-setup.sh | bash

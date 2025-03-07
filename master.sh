@@ -28,7 +28,7 @@ done
 
 # 후속 작업 실행
 read -p "👀 프로젝트 세팅을 계속해서 진행할까요? (y/n): " confirm < /dev/tty
-if ["$confirm" != "y"]; then
+if [ "$confirm" != "y" ]; then
   echo "프로젝트 세팅을 취소합니다."
   exit 0
 fi

@@ -27,9 +27,16 @@ COUNTER=0
 done
 
 # 후속 작업 실행
-read -p "👀 프로젝트 세팅을 계속해서 진행할까요? (y/n): " confirm < /dev/tty
-if [ "$confirm" != "y" ]; then
-  echo "🫠 프로젝트 세팅을 취소합니다."
+read -p "👀 프로젝트 세팅을 계속해서 진행할까요? (Y/n): " CONFIRM < /dev/tty
+CONFIRM=${CONFIRM:-y} # 기본값 설정
+CONFIRM="${CONFIRM,,}" # 소문자로 변경
+if [ "$CONFIRM" != "y" ]; then
+  echo "🫠 프로젝트 세팅을 취소합니다. pod install 은 진행됩니다."
+  echo "🥥 iOS pod install 중..."
+  cd ios
+  bundle install # you need to run this only once in your project.
+  bundle exec pod install
+  cd ..
   exit 0
 fi
 

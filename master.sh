@@ -8,6 +8,10 @@ PROJECT_NAME=${PROJECT_NAME:-MyReactNativeApp} # 기본값 설정
 read -p "👉 사용할 React Native 버전을 입력하세요 (기본값: 0.77): " RN_VERSION < /dev/tty
 RN_VERSION=${RN_VERSION:-0.77} # 기본값 설정
 
+# export로 환경 변수 지정
+export PROJECT_NAME
+export RN_VERSION
+
 # native-knot-setup.sh를 curl로 원격 실행 (이 명령이 완료되지 않아도 프로세스는 마스터 스크립트에 종속되지 않음)
 curl -sL https://raw.githubusercontent.com/milli-e/native-knot-setup/refs/heads/main/native-knot-setup.sh | bash
 
